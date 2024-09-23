@@ -1,0 +1,140 @@
+using System;
+
+public abstract MarkaModel : Transport{
+    public string Marka { get; set; }
+    public string Model { get; set; }
+    public string Speed { get; set; }
+}
+
+public abstract class Transport : MarkaModel{
+     public void Move();
+     public void FuelUp();
+    
+}
+
+
+
+public class Car : Transport{
+    public void Move(){
+        Console.Write.Line("Car moving on the road");
+    }
+     public void FuelUp(){
+        Console.Write.Line("Diesel");
+    }
+}
+public class Plane : Transport{
+    public void Move(){
+        Console.Write.Line("Plane flying");
+    }
+     public void FuelUp(){
+        Console.Write.Line("Plane petrol");
+    }
+}
+public class Motorcycle : Transport{
+    public void Move(){
+        Console.Write.Line("Moto moving on the rearwheel");
+    }
+     public void FuelUp(){
+        Console.Write.Line("Gas");
+    }
+}
+public class Bike : Transport{
+    public void Move(){
+        Console.Write.Line("Bike moving on the rearwheel");
+    }
+     public void FuelUp(){
+        Console.Write.Line("None");
+    }
+}
+
+
+
+
+
+abstract class TransportFactory{
+     abstract Transport CreateTransport();
+}
+
+
+public class CarFactory : TransportFactory{
+    public override CreateTransport()
+    {
+       return new Car();
+    }
+}
+public class MotoFactory : TransportFactory{
+  public override CreateTransport()
+    {
+        return new Moto();
+    }
+}
+public class PalneFactory : TransportFactory{
+  public override CreateTransport()
+    {
+        return new Plane();
+    }
+}
+public class BikeFactory : TransportFactory{
+  public override CreateTransport()
+    {
+        return new Bike();
+    }
+}
+
+
+
+
+public class Program{
+    public static void Main(string[] args)
+    {
+        // Создаем фабрики
+        TransportFactory carFactory = new CarFactory();
+        TransportFactory motoFactory = new MotoFactory();
+        TransportFactory planeFactory = new PlaneFactory();
+        TransportFactory bikeFactory = new BikeFactory();
+
+        // Используем фабрики для создания транспорта
+        Transport tesla = carFactory.CreateTransport();
+        tesla.Marka = "Tesla";
+        tesla.Model = "Model S";
+        tesla.Speed = "250 km/h";
+        tesla.Move();
+        tesla.FuelUp();
+        
+        Console.WriteLine();
+
+        Transport kawasaki = motoFactory.CreateTransport();
+        kawasaki.Marka = "Kawasaki";
+        kawasaki.Model = "Ninja ZX-10R";
+        kawasaki.Speed = "300 km/h";
+        kawasaki.Move();
+        kawasaki.FuelUp();
+        
+        Console.WriteLine();
+
+        Transport boeing = planeFactory.CreateTransport();
+        boeing.Marka = "Boeing";
+        boeing.Model = "747";
+        boeing.Speed = "900 km/h";
+        boeing.Move();
+        boeing.FuelUp();
+
+        Console.WriteLine();
+
+        Transport bike = bikeFactory.CreateTransport();
+        bike.Marka = "Giant";
+        bike.Model = "Escape 3";
+        bike.Speed = "20 km/h";
+        bike.Move();
+        bike.FuelUp();
+    }
+}
+
+
+
+
+
+
+
+
+
