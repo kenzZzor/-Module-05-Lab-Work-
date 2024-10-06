@@ -1,0 +1,120 @@
+using System;
+
+public interface Document
+{
+    void Open();
+}
+
+// Реализация класса Report
+public class Report : Document
+{
+    public void Open()
+    {
+        Console.WriteLine("Открывается отчет.");
+    }
+}
+
+// Реализация класса Resume
+public class Resume : Document
+{
+    public void Open()
+    {
+        Console.WriteLine("Открывается резюме.");
+    }
+}
+
+// Реализация класса Letter
+public class Letter : Document
+{
+    public void Open()
+    {
+        Console.WriteLine("Открывается письмо.");
+    }
+}
+
+// Реализация класса Invoice (новый тип документа)
+public class Invoice : Document
+{
+    public void Open()
+    {
+        Console.WriteLine("Открывается счет.");
+    }
+}
+
+// Абстрактный класс DocumentCreator
+public abstract class DocumentCreator
+{
+    public abstract Document CreateDocument();
+}
+
+public class ReportCreator : DocumentCreator
+{
+    public override Document CreateDocument()
+    {
+        return new Report();
+    }
+}
+
+public class ResumeCreator : DocumentCreator
+{
+    public override Document CreateDocument()
+    {
+        return new Resume();
+    }
+}
+
+public class LetterCreator : DocumentCreator
+{
+    public override Document CreateDocument()
+    {
+        return new Letter();
+    }
+}
+
+public class InvoiceCreator : DocumentCreator
+{
+    public override Document CreateDocument()
+    {
+        return new Invoice();
+    }
+}
+
+// Основной класс программы
+class Program
+{
+    static void Main(string[] args)
+    {
+        Console.WriteLine("Введите тип документа (Report, Resume, Letter, Invoice): ");
+        string input = Console.ReadLine();
+
+        DocumentCreator creator = GetDocumentCreator(input);
+
+        if (creator != null)
+        {
+            Document document = creator.CreateDocument();
+            document.Open();
+        }
+        else
+        {
+            Console.WriteLine("Неверный тип документа.");
+        }
+    }
+
+    // Метод, возвращающий соответствующую фабрику
+    static DocumentCreator GetDocumentCreator(string docType)
+    {
+        switch (docType.ToLower())
+        {
+            case "report":
+                return new ReportCreator();
+            case "resume":
+                return new ResumeCreator();
+            case "letter":
+                return new LetterCreator();
+            case "invoice":
+                return new InvoiceCreator(); // для нового типа документа
+            default:
+                return null;
+        }
+    }
+}
